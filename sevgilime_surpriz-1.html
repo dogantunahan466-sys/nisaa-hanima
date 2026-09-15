@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senin İçin 🌹</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    background:radial-gradient(circle at 50% 75%,#4b1021 0,#210817 38%,#09030a 100%);
+    font-family:Georgia,serif; color:white;
+  }
+  .stars{position:fixed;inset:0;pointer-events:none}
+  .star{
+    position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;
+    animation:twinkle 2s infinite alternate;opacity:.5
+  }
+  .card{
+    position:relative;z-index:5;width:min(90%,560px);padding:38px 25px;
+    text-align:center;border:1px solid rgba(255,255,255,.18);
+    border-radius:28px;background:rgba(30,5,18,.55);
+    backdrop-filter:blur(8px);box-shadow:0 0 60px rgba(255,30,90,.18);
+    animation:appear 1.8s ease both;
+  }
+  h1{font-size:clamp(30px,8vw,55px);margin:0 0 15px;color:#ffd6df}
+  p{font-size:clamp(20px,5vw,29px);line-height:1.45;margin:8px 0}
+  .small{font-size:18px;color:#ffc0cf;margin-top:18px}
+  .rose{font-size:70px;display:inline-block;animation:rose 2.2s ease-in-out infinite}
+  .petal,.heart{
+    position:fixed;top:-60px;pointer-events:none;z-index:3;
+    animation:fall linear forwards;
+  }
+  .petal{font-size:28px}
+  .heart{font-size:22px}
+  .btn{
+    margin-top:22px;padding:12px 22px;border:0;border-radius:30px;
+    background:#c51f4e;color:white;font-size:16px;cursor:pointer;
+  }
+  @keyframes fall{
+    to{transform:translate3d(var(--x),110vh,0) rotate(360deg);opacity:.15}
+  }
+  @keyframes twinkle{to{opacity:1;transform:scale(1.8)}}
+  @keyframes rose{50%{transform:scale(1.12) rotate(-3deg)}}
+  @keyframes appear{from{opacity:0;transform:translateY(25px) scale(.96)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div class="card">
+  <div class="rose">🌹</div>
+  <h1>Sen geldin ya...</h1>
+  <p>Bütün çiçekler açtı. 🌹🌷🌸</p>
+  <p><strong>İyi ki hayatımdasın ❤️</strong></p>
+  <p>Seni her geçen gün daha çok <strong>sevecem.</strong> 🥰</p>
+  <div class="small">Bu küçük sürpriz sadece senin için. 💕</div>
+  <button class="btn" onclick="moreFlowers()">Bir daha tıkla 🌹</button>
+  <button class="btn" id="musicBtn" onclick="toggleMusic()">🎵 Müziği başlat</button>
+  <audio id="music" loop preload="auto">
+    <source src="muzik.wav" type="audio/wav">
+  </audio>
+</div>
+
+<script>
+const stars=document.getElementById("stars");
+for(let i=0;i<70;i++){
+  const s=document.createElement("div"); s.className="star";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  s.style.animationDelay=Math.random()*2+"s";
+  stars.appendChild(s);
+}
+function flower(){
+  const e=document.createElement("div");
+  e.className=Math.random()>.35?"petal":"heart";
+  e.textContent=Math.random()>.25?"🌹":"❤️";
+  e.style.left=Math.random()*100+"vw";
+  e.style.setProperty("--x",(Math.random()*220-110)+"px");
+  e.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),10000);
+}
+for(let i=0;i<18;i++) setTimeout(flower,i*180);
+function moreFlowers(){
+  for(let i=0;i<35;i++) setTimeout(flower,i*90);
+}
+const music=document.getElementById("music");
+const musicBtn=document.getElementById("musicBtn");
+function toggleMusic(){
+  if(music.paused){
+    music.play().then(()=>musicBtn.textContent="⏸️ Müziği durdur")
+      .catch(()=>musicBtn.textContent="🎵 Tekrar dokun");
+  }else{
+    music.pause();
+    musicBtn.textContent="🎵 Müziği başlat";
+  }
+}
+</script>
+</body>
+</html>
